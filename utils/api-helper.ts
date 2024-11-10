@@ -11,6 +11,11 @@ export interface APITestExpect {
     body?: any;
 }
 
+export interface APITestCollection {
+    collection_name: string;
+    api_tests: Array<APITest>;
+  }
+
 export interface APITest {
     test_name: string;
     test_tags: string[];
