@@ -13,8 +13,8 @@ const apiTest: APITest = {
     assertions: [
       { 
         assert_attribute: APIResponseAttributes.STATUS,
-        operator: ExpectOperator.NOT_EQUAL,
-        assert_value: 200,
+        operator: ExpectOperator.EQUAL,
+        assert_value: 201,
         is_soft_assert: false
       }
     ]
