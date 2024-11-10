@@ -15,7 +15,6 @@ export enum APIResponseAttributes {
     RESPONSE_BODY = 'response_body'
 }
 
-
 export interface APITestAssertion {
     assert_attribute: APIResponseAttributes;
     operator: ExpectOperator;
