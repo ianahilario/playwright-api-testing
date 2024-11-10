@@ -19,7 +19,7 @@ export const GET_booking_id: APITestCollection = {
   collection_name: 'Restful Booker API Tests - GET/booking/{id}',
   tests: [
     {
-      test_name: 'should match first name',
+      test_name: 'should match booking data',
       test_tags: ['@p1'],
       base_url: BASE_URL,
       http_method: HTTPMethods.GET,
