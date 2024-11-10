@@ -8,7 +8,7 @@ But if you need to interact with a browser before/after calling an API request, 
 Create your API tests in a form of a single test or a collection of tests.
 
 **Sample collection file**
-```
+```typescript
 export const POST_create: APITestCollection = {
   collection_name: 'Restful Booker API Tests - POST/create',
   tests: [
@@ -66,7 +66,7 @@ export const POST_create: APITestCollection = {
 ```
 
 **Test file to run the collection**
-```
+```typescript
 for (const testSuite of testSuites) {
   test.describe(`${testSuite.collection_name}`, () => {
     for (const apiTest of testSuite.tests) {
@@ -84,3 +84,4 @@ View the `tests` folder for other examples.
 
 ## Running the tests
 Can run with the usual Playwright commands.
+<img width="1087" alt="image" src="https://github.com/user-attachments/assets/279bb93e-8aa3-4762-9da9-41bba5ee508d">
