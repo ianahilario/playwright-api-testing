@@ -67,13 +67,15 @@ export const POST_create: APITestCollection = {
 
 **Test file to run the collection**
 ```typescript
+const testSuites : Array<APITestCollection> = [GET_ping, POST_create, GET_booking_id];
+
 for (const testSuite of testSuites) {
   test.describe(`${testSuite.collection_name}`, () => {
     for (const apiTest of testSuite.tests) {
       test(`[${apiTest.http_method} ${apiTest.endpoint}] ${apiTest.test_name}`, { tag: apiTest.test_tags }, async ({ request }) => {
 
         const response: APIResponse = await submitAPIRequest(request, apiTest);
-        assertAPIResponse(response, apiTest.assertions);
+        await assertAPIResponse(response, apiTest.assertions);
         });
       }
   });
