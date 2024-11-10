@@ -5,11 +5,13 @@ export async function submitAPIRequest(apiRequest: APIRequestContext, apiTest:AP
 let response: APIResponse;
 switch (apiTest.http_method) {
     case 'GET':
-    response = await apiRequest.get(`${apiTest.base_url}${apiTest.endpoint}`);
+    response = await apiRequest.get(`${apiTest.base_url}${apiTest.endpoint}`, {
+        data: apiTest.body === undefined? {} : apiTest.body,
+    });
     break;
     case 'POST':
     response = await apiRequest.post(`${apiTest.base_url}${apiTest.endpoint}`, {
-        data: apiTest.body,
+        data: apiTest.body === undefined? {} : apiTest.body,
     });
     break;
     default:
