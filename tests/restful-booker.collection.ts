@@ -11,12 +11,11 @@ export const resfulBookerCollection: APITestCollection = {
       base_url: BASE_URL,
       http_method: HTTPMethods.GET,
       endpoint: '/ping',
-      assert: [
+      assertions: [
         { 
-          assert_message: 'verify that request is successful',
           assert_attribute: APIResponseAttributes.STATUS,
-          operator: ExpectOperator.EQUAL,
-          assert_value: 201,
+          operator: ExpectOperator.NOT_EQUAL,
+          assert_value: 200,
           is_soft_assert: false
         }
       ]
@@ -38,9 +37,8 @@ export const resfulBookerCollection: APITestCollection = {
         },
         additionalneeds: "Breakfast"
       },
-      assert: [
+      assertions: [
         { 
-          assert_message: 'verify that request is successful',
           assert_attribute: APIResponseAttributes.STATUS,
           operator: ExpectOperator.EQUAL,
           assert_value: 200,

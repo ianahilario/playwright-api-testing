@@ -17,7 +17,6 @@ export enum APIResponseAttributes {
 
 
 export interface APITestAssertion {
-    assert_message: string;
     assert_attribute: APIResponseAttributes;
     operator: ExpectOperator;
     assert_value: any;
@@ -37,6 +36,6 @@ export interface APITest {
     endpoint: string;
     headers?: any;
     body?: any;
-    assert: Array<APITestAssertion>;
+    assertions: Array<APITestAssertion>;
   }
 
