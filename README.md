@@ -1,5 +1,5 @@
 # playwright-api-testing
-This framework is inspired by `bruno`.
+This framework is inspired by [Bruno](https://www.usebruno.com/).
 
 If your project is purely API testing only, then Playwright might be an overkill.
 But if you need to interact with a browser before/after calling an API request, or if you simply prefer to use Playwright then this approach can work for you.
