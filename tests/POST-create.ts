@@ -2,24 +2,9 @@ import { APIResponseAttributes, APITestCollection, ExpectOperator, HTTPMethods }
 
 const BASE_URL = 'https://restful-booker.herokuapp.com';
 
-export const resfulBookerCollection: APITestCollection = {
-  collection_name: 'Restful Booker API Tests',
+export const POST_create: APITestCollection = {
+  collection_name: 'Restful Booker API Tests - POST/create',
   tests: [
-    {
-      test_name: 'should return status 200',
-      test_tags: ['@p1'],
-      base_url: BASE_URL,
-      http_method: HTTPMethods.GET,
-      endpoint: '/ping',
-      assertions: [
-        { 
-          assert_attribute: APIResponseAttributes.STATUS,
-          operator: ExpectOperator.NOT_EQUAL,
-          assert_value: 200,
-          is_soft_assert: false
-        }
-      ]
-    },
     {
       test_name: 'should be able to create booking',
       test_tags: ['@p1'],

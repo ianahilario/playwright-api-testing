@@ -1,9 +1,10 @@
 import test, { APIResponse } from '@playwright/test';
 import { APITestCollection } from '../utils/api-objects';
-import { resfulBookerCollection } from './restful-booker.collection';
 import { assertAPIResponse, submitAPIRequest } from '../utils/api-helper';
+import { GET_ping } from './GET-ping.collection';
+import { POST_create } from './POST-create';
 
-const testSuites : Array<APITestCollection> = [resfulBookerCollection];
+const testSuites : Array<APITestCollection> = [GET_ping, POST_create];
 
 for (const testSuite of testSuites) {
   test.describe(`${testSuite.collection_name}`, () => {
@@ -12,7 +13,6 @@ for (const testSuite of testSuites) {
 
         const response: APIResponse = await submitAPIRequest(request, apiTest);
         assertAPIResponse(response, apiTest.assertions);
-
         });
       }
   });
