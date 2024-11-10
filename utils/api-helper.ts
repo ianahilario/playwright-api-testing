@@ -5,21 +5,21 @@ export async function submitAPIRequest(apiRequest: APIRequestContext, apiTest:AP
 let response: APIResponse;
 switch (apiTest.http_method) {
     case 'GET':
-    response = await apiRequest.get(`${apiTest.base_url}${apiTest.endpoint}`, {
-        data: apiTest.body === undefined? {} : apiTest.body,
-    });
+        response = await apiRequest.get(`${apiTest.base_url}${apiTest.endpoint}`, {
+            data: apiTest.body === undefined? {} : apiTest.body,
+        });
     break;
     case 'POST':
-    response = await apiRequest.post(`${apiTest.base_url}${apiTest.endpoint}`, {
-        data: apiTest.body === undefined? {} : apiTest.body,
-    });
+        response = await apiRequest.post(`${apiTest.base_url}${apiTest.endpoint}`, {
+            data: apiTest.body === undefined? {} : apiTest.body,
+        });
     break;
     default:
-    throw new Error(`Unsupported HTTP method: ${apiTest.http_method}`);
+        throw new Error(`Unsupported HTTP method: ${apiTest.http_method}`);
 }
 
     console.log(`Response: ${response.status()}`);
-    if((await response.body()).toJSON()){
+    if(response.status() >= 200 && response.status() < 300) {
         console.log(`Response body: ${(await response.body()).toString()}`);
     }
 
