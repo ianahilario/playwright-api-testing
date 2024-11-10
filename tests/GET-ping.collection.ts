@@ -16,7 +16,6 @@ export const GET_ping: APITestCollection = {
           assert_attribute: APIResponseAttributes.STATUS,
           operator: ExpectOperator.NOT_EQUAL,
           assert_value: 200,
-          is_soft_assert: false
         }
       ]
     },

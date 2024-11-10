@@ -19,7 +19,6 @@ export interface APITestAssertion {
     assert_attribute: APIResponseAttributes;
     operator: ExpectOperator;
     assert_value: any;
-    is_soft_assert: boolean;
 }
 
 export interface APITestCollection {

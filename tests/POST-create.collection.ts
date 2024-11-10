@@ -27,7 +27,6 @@ export const POST_create: APITestCollection = {
           assert_attribute: APIResponseAttributes.STATUS,
           operator: ExpectOperator.EQUAL,
           assert_value: 200,
-          is_soft_assert: false
         }
       ]
     },
@@ -52,7 +51,6 @@ export const POST_create: APITestCollection = {
           assert_attribute: APIResponseAttributes.STATUS,
           operator: ExpectOperator.EQUAL,
           assert_value: 500,
-          is_soft_assert: false
         }
       ]
     },
