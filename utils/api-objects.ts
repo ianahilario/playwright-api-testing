@@ -18,6 +18,7 @@ export enum APIResponseAttributes {
 export interface APITestAssertion {
     assert_attribute: APIResponseAttributes;
     operator: ExpectOperator;
+    attribute_path?: any;
     assert_value: any;
 }
 

@@ -21,7 +21,7 @@ const apiTest: APITest = {
 
 test(`should be able to login after successful ping`, { tag: apiTest.test_tags }, async ({ request }) => {
   const response: APIResponse = await submitAPIRequest(request, apiTest);
-  assertAPIResponse(response, apiTest.assertions);
+  await assertAPIResponse(response, apiTest.assertions);
 
   //use Playwright browser capabilities to continue e2e test after calling API
 });

@@ -2,9 +2,10 @@ import test, { APIResponse } from '@playwright/test';
 import { APITestCollection } from '../utils/api-objects';
 import { assertAPIResponse, submitAPIRequest } from '../utils/api-helper';
 import { GET_ping } from './GET-ping.collection';
-import { POST_create } from './POST-create.collection';
+import { POST_create } from './POST-create-booking.collection';
+import { GET_booking_id } from './GET-booking-{id}.collection';
 
-const testSuites : Array<APITestCollection> = [GET_ping, POST_create];
+const testSuites : Array<APITestCollection> = [GET_ping, POST_create, GET_booking_id];
 
 for (const testSuite of testSuites) {
   test.describe(`${testSuite.collection_name}`, () => {
@@ -12,7 +13,7 @@ for (const testSuite of testSuites) {
       test(`[${apiTest.http_method} ${apiTest.endpoint}] ${apiTest.test_name}`, { tag: apiTest.test_tags }, async ({ request }) => {
 
         const response: APIResponse = await submitAPIRequest(request, apiTest);
-        assertAPIResponse(response, apiTest.assertions);
+        await assertAPIResponse(response, apiTest.assertions);
         });
       }
   });
