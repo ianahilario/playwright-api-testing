@@ -1,9 +1,9 @@
 import test, { APIResponse } from '@playwright/test';
 import { APITestCollection } from '../utils/api-objects';
 import { assertAPIResponse, getAPITestName, submitAPIRequest } from '../utils/api-helper';
-import { GET_ping } from './GET-ping.collection';
-import { POST_create } from './POST-create-booking.collection';
-import { GET_booking_id } from './GET-booking-{id}.collection';
+import { GET_ping } from './api-collections/GET-ping.collection';
+import { POST_create } from './api-collections/POST-create-booking.collection';
+import { GET_booking_id } from './api-collections/GET-booking-{id}.collection';
 
 const testSuites : Array<APITestCollection> = [GET_ping, POST_create, GET_booking_id];
 

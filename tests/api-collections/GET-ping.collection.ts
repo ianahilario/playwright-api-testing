@@ -1,4 +1,4 @@
-import { APIResponseAttributes, APITestCollection, ExpectOperator, HTTPMethods } from '../utils/api-objects';
+import { APIResponseAttributes, APITestCollection, ExpectOperator, HTTPMethods } from "../../utils/api-objects";
 
 const BASE_URL = 'https://restful-booker.herokuapp.com';
 
