@@ -41,7 +41,8 @@ export const GET_booking_id_chaining: APITestCollection = {
       request_data: {
         base_url: BASE_URL,
         http_method: HTTPMethods.GET,
-        endpoint: `/booking/${bookingData.id}`,
+        //endpoint: `/booking/${bookingData.id}`,
+        endpoint: `/booking/prerequestResponseBody.bookingid`,
       },
       assertions: [
         { 

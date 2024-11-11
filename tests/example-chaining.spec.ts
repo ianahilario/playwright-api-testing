@@ -11,7 +11,7 @@ for (const testSuite of testSuites) {
       test(`${getAPITestName(apiTest)}`, { tag: apiTest.test_tags }, async ({ request }) => {
 
         const prerequestResponse: APIResponse = await submitAPIRequest(request, apiTest.prerequest!);
-        const response: APIResponse = await submitAPIRequest(request, apiTest.request_data);
+        const response: APIResponse = await submitAPIRequest(request, apiTest.request_data, prerequestResponse);
         await assertAPIResponse(response, apiTest.assertions, prerequestResponse);
         });
       }

@@ -5,16 +5,32 @@ export function getAPITestName(apiTest: APITest): string {
     return `[${apiTest.request_data.http_method} ${apiTest.request_data.endpoint}] ${apiTest.test_name}`;
 };
 
-export async function submitAPIRequest(apiRequest: APIRequestContext, apiTest:APIRequestData): Promise<APIResponse> {
+export async function submitAPIRequest(apiRequest: APIRequestContext, apiTest:APIRequestData, prerequestResponse?: APIResponse): Promise<APIResponse> {
 let response: APIResponse;
+let endpoint:string = apiTest.endpoint;
+
+if((apiTest.endpoint as string).match(/prerequestResponseBody/)) {
+    const match = (apiTest.endpoint as string).match(/prerequestResponseBody\.[a-zA-Z0-9_.]+/);
+    let prerequestResponseAttributePath;
+    if (match) {
+        prerequestResponseAttributePath = match[0];
+    } else {
+        throw new Error(`Endpoint doesn't contain 'prerequestResponseBody' : ${apiTest.endpoint}`);
+    }
+    const dynamicValue = await getPrerequestResponseAttributeValue(prerequestResponse, prerequestResponseAttributePath);
+    endpoint = endpoint.replace(prerequestResponseAttributePath, dynamicValue);
+}
+
+console.log(`Sending request to endpoint: ${apiTest.base_url}${endpoint}`);
+
 switch (apiTest.http_method) {
     case 'GET':
-        response = await apiRequest.get(`${apiTest.base_url}${apiTest.endpoint}`, {
+        response = await apiRequest.get(`${apiTest.base_url}${endpoint}`, {
             data: apiTest.body === undefined? {} : apiTest.body,
         });
     break;
     case 'POST':
-        response = await apiRequest.post(`${apiTest.base_url}${apiTest.endpoint}`, {
+        response = await apiRequest.post(`${apiTest.base_url}${endpoint}`, {
             data: apiTest.body === undefined? {} : apiTest.body,
         });
     break;
@@ -55,19 +71,8 @@ async function assertStatus(response: APIResponse, assertion:APITestAssertion) {
 
 async function assertResponseBody(response: any, assertion:APITestAssertion, prerequestResponse?: any) {
     let expectedValue = assertion.assert_value;
-    let prerequestResponseBodyAttribute;
-    if((assertion.assert_value.toString()).includes('prerequestResponseBody')) {
-        if(prerequestResponse !== undefined){
-            const prerequestResponseBody = await prerequestResponse.json();
-            console.log(`Prerequest response body: ${JSON.stringify(prerequestResponseBody)}`);
-
-            prerequestResponseBodyAttribute = assertion.assert_value.replace('prerequestResponseBody.', '');
-            expectedValue = prerequestResponseBodyAttribute.split('.').reduce((obj, key) => obj && obj[key], prerequestResponseBody);
-            console.log(`******Prerequest body.attribute: ${prerequestResponseBodyAttribute} = ${expectedValue}`);
-        }
-        else{
-            throw new Error(`Prerequest response is undefined`);
-        }
+    if((assertion.assert_value.toString()).match(/prerequestResponseBody/)) {
+        expectedValue = await getPrerequestResponseAttributeValue(prerequestResponse, assertion.assert_value);
     }
 
     const responseBody = await response.json();
@@ -83,13 +88,17 @@ async function assertResponseBody(response: any, assertion:APITestAssertion, pre
     }
 }
 
-async function getPrerequestResponseAttributeValue(prerequestResponse: any, assertion:APITestAssertion){
-    const prerequestResponseBody = await prerequestResponse.json();
-    console.log(`Prerequest response body: ${JSON.stringify(prerequestResponseBody)}`);
-
-    const prerequestResponseBodyAttribute = assertion.assert_value.replace('prerequestResponseBody.', '');
-    const attributeValue = prerequestResponseBodyAttribute.split('.').reduce((obj, key) => obj && obj[key], prerequestResponseBody);
-    console.log(`******Prerequest body.attribute: ${attributeValue}`);
+async function getPrerequestResponseAttributeValue(prerequestResponse: any, prerequestAttributePath:string){
+    let attributeValue;
+    if(prerequestResponse !== undefined){
+        const prerequestResponseBody = await prerequestResponse.json();
+        const prerequestResponseBodyAttribute = prerequestAttributePath.replace('prerequestResponseBody.', '');
+        attributeValue = prerequestResponseBodyAttribute.split('.').reduce((obj, key) => obj && obj[key], prerequestResponseBody);
+        console.log(`Get '${prerequestResponseBodyAttribute}' value from pre-request response: ${JSON.stringify(prerequestResponseBody)}`);
 
     return attributeValue.toString();
+    }
+    else{
+        throw new Error(`Prerequest response is undefined`);
+    }
 }
