@@ -38,6 +38,8 @@ export interface APITestCollection {
 export interface APITest {
     test_name: string;
     test_tags: string[];
+    variables?: any;
+    prerequest?: APIRequestData;
     request_data: APIRequestData;
     assertions: Array<APITestAssertion>;
   }
