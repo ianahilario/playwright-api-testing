@@ -21,7 +21,7 @@ if((apiTest.endpoint as string).match(/prerequestResponseBody/)) {
     endpoint = endpoint.replace(prerequestResponseAttributePath, dynamicValue);
 }
 
-console.log(`Sending request to endpoint: ${apiTest.base_url}${endpoint}`);
+console.log(`Sending request to endpoint: ${apiTest.http_method} ${apiTest.base_url}${endpoint}`);
 
 switch (apiTest.http_method) {
     case 'GET':
@@ -38,7 +38,18 @@ switch (apiTest.http_method) {
         throw new Error(`Unsupported HTTP method: ${apiTest.http_method}`);
 }
 
-    console.log(`Response body: ${JSON.stringify(await response.json())}`);
+if (response.ok()) {
+    const contentType = response.headers()['content-type'];
+    if (contentType && contentType.includes('application/json')) {
+        const responseBody = await response.json();
+        console.log(`Response body: ${JSON.stringify(responseBody)}`);
+    } else {
+        const responseBody = await response.text();
+        console.log(`Response body: ${responseBody}`);
+    }
+} else {
+    console.error(`Request failed with status: ${response.status()}`);
+}
     
     return response;
 }

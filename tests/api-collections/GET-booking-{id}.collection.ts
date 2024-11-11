@@ -3,7 +3,7 @@ import { APIResponseAttributes, APITestCollection, ExpectOperator, HTTPMethods }
 const BASE_URL = 'https://restful-booker.herokuapp.com';
 
 let bookingData : any = {
-  id: 1,
+  id: 4515,
   firstname:"Sally",
   lastname:"Smith",
   totalprice:741,
