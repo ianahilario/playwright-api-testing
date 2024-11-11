@@ -9,6 +9,13 @@ export enum ExpectOperator {
     NOT_EQUAL = 'not_equal'
 }
 
+export enum AttributeDataType {
+    STRING = 'string',
+    BOOLEAN = 'boolean',
+    NUMBER = 'number',
+    DATE = 'date',
+}
+
 export interface APIRequestData {
     http_method: HTTPMethods;
     base_url: string;
@@ -27,6 +34,7 @@ export interface APITestAssertion {
     assert_attribute: APIResponseAttributes;
     operator: ExpectOperator;
     attribute_path?: any;
+    attribute_type?: AttributeDataType;
     assert_value: any;
 }
 

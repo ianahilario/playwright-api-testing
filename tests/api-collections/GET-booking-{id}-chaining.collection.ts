@@ -1,20 +1,6 @@
-import { APIResponseAttributes, APITestCollection, ExpectOperator, HTTPMethods } from '../../utils/api-objects';
+import { APIResponseAttributes, APITestCollection, AttributeDataType, ExpectOperator, HTTPMethods } from '../../utils/api-objects';
 
 const BASE_URL = 'https://restful-booker.herokuapp.com';
-
-let bookingData : any = {
-  id: 1,
-  firstname:"Sally",
-  lastname:"Smith",
-  totalprice:741,
-  depositpaid:true,
-  bookingdates:
-    {
-      checkin:"2017-07-11",
-      checkout:"2017-10-21"
-    },
-  additionalneeds:"Breakfast"
-};
 
 export const GET_booking_id_chaining: APITestCollection = {
   collection_name: 'Restful Booker API Tests - GET/booking/{id}',
@@ -41,7 +27,6 @@ export const GET_booking_id_chaining: APITestCollection = {
       request_data: {
         base_url: BASE_URL,
         http_method: HTTPMethods.GET,
-        //endpoint: `/booking/${bookingData.id}`,
         endpoint: `/booking/prerequestResponseBody.bookingid`,
       },
       assertions: [
@@ -67,12 +52,14 @@ export const GET_booking_id_chaining: APITestCollection = {
           operator: ExpectOperator.EQUAL,
           attribute_path: 'totalprice',
           assert_value: "prerequestResponseBody.booking.totalprice",
+          attribute_type: AttributeDataType.NUMBER,
         },
         { 
           assert_attribute: APIResponseAttributes.RESPONSE_BODY,
           operator: ExpectOperator.EQUAL,
           attribute_path: 'depositpaid',
           assert_value: "prerequestResponseBody.booking.depositpaid",
+          attribute_type: AttributeDataType.BOOLEAN,
         },
         { 
           assert_attribute: APIResponseAttributes.RESPONSE_BODY,

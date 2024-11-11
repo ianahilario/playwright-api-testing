@@ -1,5 +1,5 @@
 import { APIRequestContext, APIResponse, expect } from "@playwright/test";
-import { APIRequestData, APITest, APITestAssertion, ExpectOperator } from "./api-objects";
+import { APIRequestData, APITest, APITestAssertion, AttributeDataType, ExpectOperator } from "./api-objects";
 
 export function getAPITestName(apiTest: APITest): string {
     return `[${apiTest.request_data.http_method} ${apiTest.request_data.endpoint}] ${apiTest.test_name}`;
@@ -82,8 +82,9 @@ async function assertStatus(response: APIResponse, assertion:APITestAssertion) {
 
 async function assertResponseBody(response: any, assertion:APITestAssertion, prerequestResponse?: any) {
     let expectedValue = assertion.assert_value;
+    const expectedAttributeDataType: AttributeDataType = assertion.attribute_type ?? AttributeDataType.STRING;
     if((assertion.assert_value.toString()).match(/prerequestResponseBody/)) {
-        expectedValue = await getPrerequestResponseAttributeValue(prerequestResponse, assertion.assert_value);
+        expectedValue = await getPrerequestResponseAttributeValue(prerequestResponse, assertion.assert_value, expectedAttributeDataType);
     }
 
     const responseBody = await response.json();
@@ -99,7 +100,7 @@ async function assertResponseBody(response: any, assertion:APITestAssertion, pre
     }
 }
 
-async function getPrerequestResponseAttributeValue(prerequestResponse: any, prerequestAttributePath:string){
+async function getPrerequestResponseAttributeValue(prerequestResponse: any, prerequestAttributePath:string, prerequestAttributeType:AttributeDataType = AttributeDataType.STRING){
     let attributeValue;
     if(prerequestResponse !== undefined){
         const prerequestResponseBody = await prerequestResponse.json();
@@ -107,7 +108,23 @@ async function getPrerequestResponseAttributeValue(prerequestResponse: any, prer
         attributeValue = prerequestResponseBodyAttribute.split('.').reduce((obj, key) => obj && obj[key], prerequestResponseBody);
         console.log(`Get '${prerequestResponseBodyAttribute}' value from pre-request response: ${JSON.stringify(prerequestResponseBody)}`);
 
-    return attributeValue.toString();
+    switch(prerequestAttributeType){
+        case AttributeDataType.STRING:
+            attributeValue = attributeValue.toString();
+            break;
+        case AttributeDataType.BOOLEAN:
+            attributeValue = (attributeValue.toString().toLowerCase() === 'true');
+            break;
+        case AttributeDataType.NUMBER:
+            attributeValue = Number(attributeValue);
+            break;
+        case AttributeDataType.DATE:
+            attributeValue = new Date(attributeValue);
+            break;
+        default:
+            throw new Error(`Unsupported attribute data type`);
+    }
+    return attributeValue;
     }
     else{
         throw new Error(`Prerequest response is undefined`);
