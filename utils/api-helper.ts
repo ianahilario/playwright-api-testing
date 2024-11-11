@@ -106,7 +106,7 @@ async function getPrerequestResponseAttributeValue(prerequestResponse: any, prer
         const prerequestResponseBody = await prerequestResponse.json();
         const prerequestResponseBodyAttribute = prerequestAttributePath.replace('prerequestResponseBody.', '');
         attributeValue = prerequestResponseBodyAttribute.split('.').reduce((obj, key) => obj && obj[key], prerequestResponseBody);
-        console.log(`Get '${prerequestResponseBodyAttribute}' value from pre-request response: ${JSON.stringify(prerequestResponseBody)}`);
+        console.log(`Get attribute path '${prerequestResponseBodyAttribute}' value '${attributeValue}' from pre-request response: ${JSON.stringify(prerequestResponseBody)}`);
 
     switch(prerequestAttributeType){
         case AttributeDataType.STRING:

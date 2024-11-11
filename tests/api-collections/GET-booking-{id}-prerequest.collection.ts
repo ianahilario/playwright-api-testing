@@ -70,7 +70,7 @@ export const GET_booking_id_chaining: APITestCollection = {
         { 
           assert_attribute: APIResponseAttributes.RESPONSE_BODY,
           operator: ExpectOperator.EQUAL,
-          attribute_path: 'prerequestResponse.bookingdates.checkout',
+          attribute_path: 'bookingdates.checkout',
           assert_value: "prerequestResponseBody.booking.bookingdates.checkout",
         },
         { 

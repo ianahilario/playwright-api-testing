@@ -1,7 +1,7 @@
 import test, { APIResponse } from '@playwright/test';
 import { APITestCollection } from '../utils/api-objects';
 import { assertAPIResponse, getAPITestName, submitAPIRequest } from '../utils/api-helper';
-import { GET_booking_id_chaining } from './api-collections/GET-booking-{id}-chaining.collection';
+import { GET_booking_id_chaining } from './api-collections/GET-booking-{id}-prerequest.collection';
 
 const testSuites : Array<APITestCollection> = [GET_booking_id_chaining];
 
