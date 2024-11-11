@@ -9,6 +9,14 @@ export enum ExpectOperator {
     NOT_EQUAL = 'not_equal'
 }
 
+export interface APIRequestData {
+    http_method: HTTPMethods;
+    base_url: string;
+    endpoint: string;
+    headers?: any;
+    body?: any;
+}
+
 export enum APIResponseAttributes {
     STATUS = 'status',
     HEADER = 'header',
@@ -30,11 +38,7 @@ export interface APITestCollection {
 export interface APITest {
     test_name: string;
     test_tags: string[];
-    base_url: string;
-    http_method: HTTPMethods;
-    endpoint: string;
-    headers?: any;
-    body?: any;
+    request_data: APIRequestData;
     assertions: Array<APITestAssertion>;
   }
 

@@ -8,19 +8,21 @@ export const POST_create: APITestCollection = {
     {
       test_name: 'should be able to create booking',
       test_tags: ['@p1'],
-      base_url: BASE_URL,
-      http_method: HTTPMethods.POST,
-      endpoint: '/booking',
-      body: {
-        firstname: "Jim",
-        lastname: "Brown",
-        totalprice: 111,
-        depositpaid: true,
-        bookingdates: {
-          checkin: "2018-01-01",
-          checkout: "2019-01-01"
-        },
-        additionalneeds: "Breakfast"
+      request_data: {
+        base_url: BASE_URL,
+        http_method: HTTPMethods.POST,
+        endpoint: '/booking',
+        body: {
+          firstname: "Jim",
+          lastname: "Brown",
+          totalprice: 111,
+          depositpaid: true,
+          bookingdates: {
+            checkin: "2018-01-01",
+            checkout: "2019-01-01"
+          },
+          additionalneeds: "Breakfast"
+        }
       },
       assertions: [
         { 
@@ -33,18 +35,20 @@ export const POST_create: APITestCollection = {
     {
       test_name: 'should require first name',
       test_tags: [],
-      base_url: BASE_URL,
-      http_method: HTTPMethods.POST,
-      endpoint: '/booking',
-      body: {
-        lastname: "Brown",
-        totalprice: 111,
-        depositpaid: true,
-        bookingdates: {
-          checkin: "2018-01-01",
-          checkout: "2019-01-01"
+      request_data: {
+        base_url: BASE_URL,
+        http_method: HTTPMethods.POST,
+        endpoint: '/booking',
+        body: {
+          lastname: "Brown",
+          totalprice: 111,
+          depositpaid: true,
+          bookingdates: {
+            checkin: "2018-01-01",
+            checkout: "2019-01-01"
+          },
+          additionalneeds: "Breakfast"
         },
-        additionalneeds: "Breakfast"
       },
       assertions: [
         { 

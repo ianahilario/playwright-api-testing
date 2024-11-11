@@ -8,9 +8,11 @@ export const GET_ping: APITestCollection = {
     {
       test_name: 'should return status 200',
       test_tags: ['@p1'],
-      base_url: BASE_URL,
-      http_method: HTTPMethods.GET,
-      endpoint: '/ping',
+      request_data: {
+        base_url: BASE_URL,
+        http_method: HTTPMethods.GET,
+        endpoint: `/ping`,
+      },
       assertions: [
         { 
           assert_attribute: APIResponseAttributes.STATUS,

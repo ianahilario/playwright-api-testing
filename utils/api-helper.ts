@@ -1,7 +1,11 @@
 import { APIRequestContext, APIResponse, expect } from "@playwright/test";
-import { APITest, APITestAssertion, ExpectOperator } from "./api-objects";
+import { APIRequestData, APITest, APITestAssertion, ExpectOperator } from "./api-objects";
 
-export async function submitAPIRequest(apiRequest: APIRequestContext, apiTest:APITest): Promise<APIResponse> {
+export function getAPITestName(apiTest: APITest): string {
+    return `[${apiTest.request_data.http_method} ${apiTest.request_data.endpoint}] ${apiTest.test_name}`;
+};
+
+export async function submitAPIRequest(apiRequest: APIRequestContext, apiTest:APIRequestData): Promise<APIResponse> {
 let response: APIResponse;
 switch (apiTest.http_method) {
     case 'GET':
@@ -51,10 +55,10 @@ async function assertResponseBody(response: any, attribute:any, expectedValue:nu
     console.log(`Response body: ${JSON.stringify(responseBody)}`);
 
     if(assertOperator === ExpectOperator.EQUAL) {
-        expect.soft(responseBody, `assert attribute '${attribute}' is ${expectedValue}`).toHaveProperty(attribute, expectedValue);
+        expect.soft(responseBody, `assert response attribute '${attribute}' is ${expectedValue}`).toHaveProperty(attribute, expectedValue);
     }
     else if(assertOperator === ExpectOperator.NOT_EQUAL) {
-        expect.soft(responseBody, `assert attribute '${attribute}' is NOT ${expectedValue}`).not.toHaveProperty(attribute, expectedValue);
+        expect.soft(responseBody, `assert response attribute '${attribute}' is NOT ${expectedValue}`).not.toHaveProperty(attribute, expectedValue);
     }
     else {
         throw new Error(`Unsupported expect operator: ${assertOperator}`);

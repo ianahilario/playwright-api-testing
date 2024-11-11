@@ -1,6 +1,7 @@
 import { APIResponseAttributes, APITestCollection, ExpectOperator, HTTPMethods } from '../utils/api-objects';
 
 const BASE_URL = 'https://restful-booker.herokuapp.com';
+
 let bookingData : any = {
   id: 1,
   firstname:"Sally",
@@ -21,9 +22,11 @@ export const GET_booking_id: APITestCollection = {
     {
       test_name: 'should match booking data',
       test_tags: ['@p1'],
-      base_url: BASE_URL,
-      http_method: HTTPMethods.GET,
-      endpoint: `/booking/${bookingData.id}`,
+      request_data: {
+        base_url: BASE_URL,
+        http_method: HTTPMethods.GET,
+        endpoint: `/booking/${bookingData.id}`,
+      },
       assertions: [
         { 
           assert_attribute: APIResponseAttributes.STATUS,
